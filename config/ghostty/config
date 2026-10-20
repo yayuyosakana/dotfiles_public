@@ -1,0 +1,170 @@
+# =========================
+# Appearance 
+# =========================
+font-size = 19
+font-family = "UDEV Gothic"
+theme = Adventure
+palette = 8=#626880
+# Force a minimum foreground/background contrast ratio. Default 1 disables it.
+# 1.1 only kicks in on nearly-unreadable pairs, so theme hues stay intact;
+# higher values pull the foreground toward black/white and distort palettes.
+minimum-contrast = 1.1
+cursor-style = block
+mouse-hide-while-typing = true
+window-padding-balance = true
+window-save-state = always
+window-colorspace = "display-p3"
+# macOS: タブをタイトルバーに統合
+macos-titlebar-style = tabs
+
+# =========================
+# Shell integration
+# =========================
+# Default is no-ssh-env,no-ssh-terminfo, which leaves remote hosts without a
+# terminfo entry for xterm-ghostty (TUIs and colors break over SSH). With both
+# enabled Ghostty installs its terminfo on the remote and falls back to
+# xterm-256color if that fails. sudo stays off, matching the default.
+shell-integration-features = cursor,title,path,ssh-env,ssh-terminfo
+
+# =========================
+# Breakline 
+# =========================
+keybind = shift+enter=text:\x1b\r
+
+# =========================
+# Word by word deletion
+# =========================
+keybind = alt+backspace=text:\x1b\x7f
+keybind = shift+backspace=text:\x1b\x7f
+
+# =========================
+# herdr へのキー転送
+# =========================
+# 階層のルール:
+#   Cmd        = 画面の中 (herdr)
+#   Cmd+Option = 空けてある (macOS やほかのアプリ用)
+#   Option     = 空けてある (Option+矢印の単語移動など)
+#
+# prefix = Ctrl+B = \x02 を Ghostty が代打ちするので、押すのは常に1キー。
+# Ghostty 既定の Cmd の意味をそのまま herdr の同じ操作へ流している。
+# text: はバイト列を直接流すので、日本語 IME が有効でも素通りする。
+
+# --- 作る・分ける ---
+# Cmd+T           新しいタブ
+keybind = super+t=text:\x02c
+# Cmd+D           右に分割
+keybind = super+d=text:\x02v
+# Cmd+Shift+D     下に分割
+keybind = super+shift+d=text:\x02-
+# Cmd+Shift+N     新しいワークスペース
+keybind = super+shift+n=text:\x02N
+# Cmd+Shift+G     新しい worktree
+keybind = super+shift+g=text:\x02G
+
+# --- 矢印キーは herdr に渡さない ---
+# Ghostty 既定の値を明示的に書き戻している。
+# 一度 \x02h などを割り当ててしまったので、古い設定が残っていても
+# 必ず上書きされるように、消すのではなく既定値で塗り直す。
+keybind = super+arrow_left=text:\x01
+keybind = super+arrow_right=text:\x05
+keybind = super+arrow_up=jump_to_prompt:-1
+keybind = super+arrow_down=jump_to_prompt:1
+# Option+矢印     = 単語移動  (Ghostty 既定。触らない)
+# Cmd+Option+矢印 = 空けてある (ほかのアプリ用)
+
+# --- 移動 ---
+# Ctrl+Shift 帯域（ペイン移動・ワークスペース前後・ワークスペースを閉じる）は
+# herdr が直接受け取るので、Ghostty では何も奪わない。
+# Cmd+1..9        タブ切替
+# 注意: Ghostty 1.3 の既定は super+digit_N（物理キー指定）で、
+#       super+N（文字指定）より優先される。既定の goto_tab を潰すため両方書く。
+keybind = super+digit_1=text:\x021
+keybind = super+1=text:\x021
+keybind = super+digit_2=text:\x022
+keybind = super+2=text:\x022
+keybind = super+digit_3=text:\x023
+keybind = super+3=text:\x023
+keybind = super+digit_4=text:\x024
+keybind = super+4=text:\x024
+keybind = super+digit_5=text:\x025
+keybind = super+5=text:\x025
+keybind = super+digit_6=text:\x026
+keybind = super+6=text:\x026
+keybind = super+digit_7=text:\x027
+keybind = super+7=text:\x027
+keybind = super+digit_8=text:\x028
+keybind = super+8=text:\x028
+keybind = super+digit_9=text:\x029
+keybind = super+9=text:\x029
+# ワークスペースの前 / 次 (Ctrl+Shift+H / L) は herdr が直接受け取るので、
+# Ghostty では何も奪わずそのまま通す。
+
+# Cmd+Shift+[ ]   前 / 次のタブ
+keybind = super+shift+[=text:\x02p
+keybind = super+shift+]=text:\x02n
+# Cmd+O           呼んでいるエージェントへ飛ぶ
+keybind = super+o=text:\x02o
+# Cmd+P           ワークスペース選択
+keybind = super+p=text:\x02w
+
+# --- 表示 ---
+# Cmd+Shift+Enter ペイン最大化 / 戻す (Cmd+Enter は Ghostty の全画面のまま)
+keybind = super+shift+enter=text:\x02z
+# Cmd+B           サイドバー開閉
+keybind = super+b=text:\x02b
+# Cmd+R           リサイズモード
+keybind = super+r=text:\x02r
+
+# --- 閉じる ---
+# Cmd+W           ペインを閉じる
+keybind = super+w=text:\x02x
+# Cmd+Shift+W     タブを閉じる
+# (Ghostty 既定の「ウィンドウを閉じる」を上書き。herdr からの離脱は
+#  Cmd+Q で Ghostty ごと終了すればよい。サーバーは生き残る)
+keybind = super+shift+w=text:\x02X
+
+# --- herdr の中の補助 ---
+# Cmd+[           コピーモード（スクロール・検索・コピー）
+# 入ったら hjkl / PageUp / PageDown / Ctrl+U / Ctrl+D で移動、
+# 「/」で検索して n・N で次と前、v か Space で選択、y か Enter でコピー、
+# q か Esc で抜ける。herdr の中で Ghostty のスクロールが効かない代わりがこれ。
+keybind = super+[=text:\x02[
+# Cmd+G           navigate モード (矢印/hjkl で移動、Esc で抜ける)
+keybind = super+g=text:\x02g
+# Cmd+/           herdr のキー一覧を出す
+keybind = super+/=text:\x02?
+
+# --- プラグイン ---
+# Cmd+U           gh-pr: PR をブラウザで開く
+keybind = super+u=text:\x02u
+# Cmd+I           gh-pr: PR の状態を再取得
+keybind = super+i=text:\x02i
+# Cmd+Shift+U     作業ツリーの差分を hunk でレビュー（--watch で自動更新）
+keybind = super+shift+u=text:\x02U
+
+# 予約（絶対に割り当てない）:
+#   Cmd+M / Option+M   作者がほかの用途で使っているので空けてある (自由に使ってよい)
+#
+# 奪っていないもの:
+#   Cmd+Q 終了 / Cmd+H 隠す / Cmd+K 画面クリア / Cmd+C,V コピペ
+#   Cmd+Enter 全画面 / Cmd+Shift+W ウィンドウを閉じる (= herdr からデタッチ)
+#   Ctrl+英字はすべて shell と Claude Code に返上済み (Ctrl+L, Ctrl+K, Ctrl+A/E が復活)
+
+# =========================
+# スクロール (Ghostty 側の動作。herdr の外で効く)
+# =========================
+# Ctrl+Shift+J / K は削除した。Ghostty のスクロールバックは herdr の中では
+# 届かず、Claude Code が前面にいるときも効かない死にキーだったため。
+# Cmd+Shift+↓ / ↑    一番下 / 一番上へ飛ぶ
+# (Ghostty 既定の jump_to_prompt を上書きしている)
+keybind = super+shift+arrow_down=scroll_to_bottom
+keybind = super+shift+arrow_up=scroll_to_top
+
+# =========================
+# スニペット
+# =========================
+# Ctrl+:  →  continue + Enter
+# (JIS 配列の「:」は apostrophe の物理位置。Enter は \n ではなく \r)
+keybind = ctrl+apostrophe=text:continue\r
+# Ctrl+;  →  /exit + Enter（Claude Code を終了）
+keybind = ctrl+semicolon=text:/exit\r

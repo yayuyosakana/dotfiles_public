@@ -1,0 +1,3 @@
+wyattjoh/herdr-plugin-gh-pr@6fe22de9a90c569f2186595cfddc3707f55ba1bd
+ryanlewis/herdr-tab-renamer@bafd4dc4d75d3d3c8bf541970365f4b057a4377f
+tdi/herdr-worktree-setup@4527a11bd5444dbce34c3d4f459b49d704cc12a7
