@@ -23,6 +23,11 @@ cd ~/dotfiles_public
 ./install.sh             # 入れる
 ```
 
+## Ghostty と herdr を使う理由
+
+- **Ghostty**：macOS で軽く動くターミナルです。設定は1つのテキストファイルにまとまっていて、キーも自由に割り当てられます。ここでは Cmd キーを herdr の操作に割り当てています。
+- **herdr**：1つの画面を分けて、複数の Claude Code を並べて動かせます。どの Claude が作業中か、入力を待っているか、終わったかがタブやワークスペースの一覧に出ます。呼んでいる Claude には Cmd+O で移れるので、画面を順に見て回らなくて済みます。Ghostty を閉じても中の作業は止まらず、開き直すとそのまま戻れます。
+
 ## 入るもの
 
 | もの | 内容 | 置き場所 |
@@ -35,6 +40,14 @@ cd ~/dotfiles_public
 | gh | GitHub CLI。gh-pr プラグインが使う | brew で入れる |
 
 `~/.zshrc` の末尾には、`~/.config/dotfiles_public/init.zsh` を読み込む3行が足されます。中身は starship の設定と、Ghostty を開いたときに herdr を自動で起動する設定です。
+
+## 最初にやってみる
+
+1. Ghostty を開くと herdr が立ち上がります。
+2. `cd` で作業するフォルダに移り、`claude` で Claude Code を起動します。
+3. Cmd+D で画面を右に分け、そちらでも `claude` を起動します。
+4. 両方に別々の作業を頼みます。片方が入力を待ったり終わったりしたら、Cmd+O でそちらに移ります。
+5. キーを忘れたら Cmd+/ で一覧を出します。Cmd+Q で Ghostty を閉じても作業は続き、開き直すと元の画面に戻ります。
 
 ## キーの早見表
 
