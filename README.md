@@ -1,6 +1,6 @@
 # dotfiles_public
 
-macOS 用の Ghostty（ターミナル）、herdr（AI エージェント向けの画面分割ツール）、starship（プロンプト）の設定一式です。
+macOS 用の Ghostty（ターミナル）、herdr（AI エージェント向けの画面分割ツール）、starship（プロンプト）の設定と、zsh の入力を少し楽にする設定の一式です。
 
 ## 使い方
 
@@ -44,8 +44,11 @@ cd ~/dotfiles_public
 | starship | 入力行にフォルダや git のブランチを表示する | `~/.config/starship.toml` |
 | UDEV Gothic | Ghostty で使うフォント | brew で入れる |
 | gh | GitHub CLI。gh-pr プラグインが使う | brew で入れる |
+| zsh-autosuggestions | 打ちかけると、過去に打ったコマンドが薄い灰色で出る。→ キーで確定 | brew で入れる |
+| zsh-syntax-highlighting | 打ったコマンドを色分けする。あるコマンドは緑、打ち間違いは赤 | brew で入れる |
+| zoxide | `z フォルダ名の一部` で、行ったことのあるフォルダへ飛ぶ | brew で入れる |
 
-`~/.zshrc` の末尾には、`~/.config/dotfiles_public/init.zsh` を読み込む3行が足されます。中身は starship の設定と、Ghostty を開いたときに herdr を自動で起動する設定です。
+`~/.zshrc` の末尾には、`~/.config/dotfiles_public/init.zsh` を読み込む3行が足されます。中身は starship の設定、上の 3 つの zsh の道具の読み込み、↑↓ キーの設定、Ghostty を開いたときに herdr を自動で起動する設定です。
 
 ## 最初にやってみる
 
@@ -54,6 +57,13 @@ cd ~/dotfiles_public
 3. Cmd+D で画面を右に分け、そちらでも `claude` を起動します。
 4. 両方に別々の作業を頼みます。片方が入力を待ったり終わったりしたら、Cmd+O でそちらに移ります。
 5. キーを忘れたら Cmd+/ で一覧を出します。Cmd+Q で Ghostty を閉じても作業は続き、開き直すと元の画面に戻ります。
+
+ターミナルでの入力も少し楽になっています。
+
+- 打ちかけると、前に打ったコマンドが薄い灰色で出ます。→ キーで確定します。
+- `git` などと打ってから ↑ を押すと、その文字で始まる履歴だけをさかのぼれます。
+- 打ったコマンドが赤くなったら、打ち間違いか、まだ入っていないコマンドです。
+- 一度 `cd` したフォルダには、名前の一部だけで飛べます（例：`~/projects/report` なら `z rep`）。`zi` で一覧から選べます。
 
 ## キーの早見表
 
@@ -95,6 +105,7 @@ herdr から抜けるときは Ghostty を Cmd+Q で終了します。中で動�
 - 文字の大きさ：`~/.config/ghostty/config` の `font-size = 19`
 - 色：同じファイルの `theme = Adventure`。`ghostty +list-themes` で一覧が出ます
 - herdr を自動で起動しない：`~/.zshrc` の読み込みの行より前に `DOTFILES_PUBLIC_NO_HERDR=1` を書く。このとき Cmd+T などは herdr の外では効かないので、`~/.config/ghostty/config` の「herdr へのキー転送」の部分も消してください
+- zsh の道具を一部止める：`~/.zshrc` の読み込みの行より前に、`DOTFILES_PUBLIC_NO_SUGGEST=1`（候補の表示）、`DOTFILES_PUBLIC_NO_HIGHLIGHT=1`（色分け）、`DOTFILES_PUBLIC_NO_HISTORY_KEYS=1`（↑↓ キー）、`DOTFILES_PUBLIC_NO_ZOXIDE=1`（`z`）のうち止めたいものを書く。`~/.zshrc` ですでに読み込んでいるものは、二重には読み込みません
 - 差分を見る道具 hunk（Cmd+Shift+U）：`./install.sh --with-hunk` で入ります（npm が必要）
 
 Claude Code に「Ghostty の文字を小さくして」のように頼んでも変えられます。
@@ -103,4 +114,4 @@ Claude Code に「Ghostty の文字を小さくして」のように頼んでも
 
 1. `~/.zshrc` の `# >>> dotfiles_public >>>` から `# <<< dotfiles_public <<<` までを消す
 2. `~/.dotfiles_public_backup/<日時>/` に退避した設定を元の場所に戻す
-3. アプリも消すなら `brew uninstall --cask ghostty font-udev-gothic` と `brew uninstall herdr starship`
+3. アプリも消すなら `brew uninstall --cask ghostty font-udev-gothic` と `brew uninstall herdr starship zsh-autosuggestions zsh-syntax-highlighting zoxide`

@@ -11,10 +11,11 @@
   git clone https://github.com/yayuyosakana/dotfiles_public.git ~/dotfiles_public
   ```
 - 利用者に、何をするかを短く伝えて了承をもらいます。
-  - brew で ghostty、font-udev-gothic、herdr、starship、gh を入れる
+  - brew で ghostty、font-udev-gothic、herdr、starship、gh、zsh-autosuggestions、zsh-syntax-highlighting、zoxide を入れる
   - `~/.config` の ghostty、herdr、starship の設定を置き換える（今の設定は `~/.dotfiles_public_backup/<日時>/` に退避する）
   - `~/.zshrc` の末尾に読み込み用の3行を足す
   - Ghostty を開くと herdr が自動で起動するようになる
+  - zsh で、履歴の候補の表示、コマンドの色分け、↑ キーでの履歴の絞り込み、`z` でのフォルダ移動が使えるようになる
 
 ## 2. 何が変わるかを見せる
 
@@ -46,7 +47,7 @@ cd ~/dotfiles_public && ./install.sh
 ## 5. 終わったら利用者に伝えること
 
 - 最初はマウスで操作できます。ペインやタブをクリックして選び、境目をドラッグして大きさを変え、右クリックでメニューが出ます。
-- よく使うキーは README.md の「キーの早見表」にあります。とくに Cmd+T（新しいタブ）、Cmd+D（右に分割）、Ctrl+Shift+H と L（前と次のワークスペース）、Ctrl+:（Claude に continue を送る）、Ctrl+;（Claude Code を終了する）は最初に伝えてください。herdr の中で Cmd+/ を押すと、キーの一覧が出ます。
+- よく使うキーは README.md の「キーの早見表」にあります。新しいターミナルを開いたら、薄い灰色の候補は → キーで確定できること、`git` などと打ってから ↑ を押すとその文字で始まる履歴だけをさかのぼれること、`z フォルダ名の一部` で行ったことのあるフォルダへ飛べることも伝えてください。とくに Cmd+T（新しいタブ）、Cmd+D（右に分割）、Ctrl+Shift+H と L（前と次のワークスペース）、Ctrl+:（Claude に continue を送る）、Ctrl+;（Claude Code を終了する）は最初に伝えてください。herdr の中で Cmd+/ を押すと、キーの一覧が出ます。
 - herdr の中で `claude` と打てば Claude Code が起動します。
 - 元に戻す方法は README.md の「元に戻す」にあります。
 

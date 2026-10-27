@@ -148,6 +148,11 @@ else
     herdr config check >/dev/null 2>&1 && info "herdr の設定: OK" || warn "herdr の設定にエラーがあります: herdr config check で確認してください"
   fi
   command -v starship >/dev/null && info "starship: $(starship --version | head -1)" || warn "starship が見つかりません"
+  command -v zoxide >/dev/null && info "zoxide: OK" || warn "zoxide が見つかりません"
+  for f in zsh-autosuggestions/zsh-autosuggestions.zsh zsh-syntax-highlighting/zsh-syntax-highlighting.zsh; do
+    if [[ -f $(brew --prefix 2>/dev/null)/share/$f ]]; then info "${f%%/*}: OK"
+    else warn "${f%%/*} が見つかりません（brew install ${f%%/*}）"; fi
+  done
   if ls ~/Library/Fonts /Library/Fonts 2>/dev/null | grep -qi 'UDEVGothic'; then
     info "フォント UDEV Gothic: OK"
   else
